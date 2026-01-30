@@ -1,14 +1,15 @@
-# Solving generic parametric linear matrix inequalities
+# Solving parametric linear matrix inequalities
 
-This repository is a companion to the experiments of the paper (Section 7):
+This repository is a companion to the experiments in the following papers:
 
-> [1] Simone Naldi, Mohab Safey El Din, Adrien Taylor, and Weijia Wang. "Solving generic parametric linear matrix inequalities."
+> [1] Simone Naldi, Mohab Safey El Din, Adrien Taylor, and Weijia Wang. "Solving generic parametric linear matrix inequalities." \
+> [2] Simone Naldi, Mohab Safey El Din, Adrien Taylor, and Weijia Wang. "Solving parametric linear matrix inequalities."
 
-Date:    February 2025
+Date:    January 2026
 
-Version: February 2025
+Version: January 2026
 
-#### Folder organization & files
+## Folder organization & files
 
 List of examples: [pdf](doc/examples.pdf) [tex](doc/examples.tex)
 
@@ -21,11 +22,13 @@ List of examples: [pdf](doc/examples.pdf) [tex](doc/examples.tex)
 
 - Main document: [pdf](doc/LMI_for_algorithm_analysis.pdf) [tex](doc/LMI_for_algorithm_analysis.tex)
 - Wolfram notebook for generating the LMI for the proximal-point method: [notebook](notebooks/Example_Proximal_Point.nb)
-- Wolfram notebook for generating the LMI for the gradient method: [notebook](notebooks/Example_Gradient_Descent.nb)
+- Wolfram notebook for generating the LMI for the gradient descent method: [notebook](notebooks/Example_Gradient_Descent.nb)
+- Wolfram notebook for generating the LMI for the stochastic gradient descent method: [notebook](notebooks/Example_SGD.nb)
+- Wolfram notebook for generating the LMI for the Lyapunov function for gradient descent method: [notebook](notebooks/Example_GD_Lyapunov.nb)
 
-#### Authors
+## Authors
 
 - [Simone Naldi](https://www.unilim.fr/pages_perso/simone.naldi/)
-- [Mohab Safey El Din](https://polsys.lip6.fr/~safey/)
+- [Mohab Safey El Din](https://safey.perso.lip6.fr/)
 - [Adrien Taylor](https://www.di.ens.fr/~ataylor/)
-- [Weijia Wang](https://polsys.lip6.fr/~weijia/)
+- [Weijia Wang](https://weijia.perso.lip6.fr/)

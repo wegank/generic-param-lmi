@@ -1,0 +1,4 @@
+lambda1,lambda2,lambda3
+0,-L^2*lambda1+L^2,-L^2*lambda3
+-L^2*lambda1+L^2,Ak*L+2*L*lambda1-L,-L*lambda2+L*lambda3
+-L^2*lambda3,-L*lambda2+L*lambda3,-Akplus1*L+2*L*lambda3+2*L*lambda4

@@ -4,7 +4,7 @@
 \usepackage{framed}
 
 \title{Examples of parametric linear matrix inequalities for algorithm analysis}
-\titlenote{This note comes along as a complement to the paper ``\emph{Solving generic parametric linear matrix inequalities}'' by the same authors.}
+\titlenote{This note comes along as a complement to the papers ``\emph{Solving generic parametric linear matrix inequalities}'' and ``\emph{Solving parametric linear matrix inequalities}'' by the same authors.}
 
 \author{Simone Naldi}
 \affiliation{
@@ -45,7 +45,7 @@
 
 \maketitle
 
-This short note summarizes and contextualizes the parametric linear matrix inequalities for algorithm analysis that are used in the experimental section of the paper ``\emph{Solving generic parametric linear matrix inequalities}''. Those LMIs originate from the line of works~\cite{drori2014performance,taylor2017exact,taylor2017smooth,ryu2020operator}
+This short note summarizes and contextualizes the parametric linear matrix inequalities for algorithm analysis that are used in the experimental section of the papers ``\emph{Solving generic parametric linear matrix inequalities}'' and ``\emph{Solving parametric linear matrix inequalities}''. Those LMIs originate from the line of works~\cite{drori2014performance,taylor2017exact,taylor2017smooth,taylor2019stochastic,ryu2020operator}
 
 \section{Gradient descent}
 We let $f\in\mathcal{F}_{\mu,L}$ ($f$ is an $L$-smooth $\mu$-strongly convex function; with $0< \mu \leq L<\infty$ and $x_\star$ denotes the minimum of $f$) and a gradient method with step size:
@@ -169,6 +169,57 @@ S=\begin{pmatrix}
 which has 4 parameters ($0< \mu\leq \beta<\infty$, and $\rho$, $\theta$) and 2 variables ($\lambda^A_\mu,\lambda_\beta^B\geq0$).
 
 This LMI was proposed in~\cite[SM3.1.1.]{ryu2020operator} and its solution is described in~\cite[Theorem 4.1]{ryu2020operator} (the proofs require about $13$ pages in the appendix, the parameter regions are illustrated in~\cite[Figure 3]{ryu2020operator}).
+
+\subsection{Stochastic gradient descent (SGD)}
+We let $f_{1,2}\in\mathcal{F}_{\mu,L}$ ($f_i$ is an $L$-smooth $\mu$-strongly convex function; with $0< \mu \leq L<\infty$ and $x_\star$ denotes the minimum of $F=f_1+f_2$) and a stochastic gradient method with step size $\gamma$:
+\begin{equation*}
+\begin{aligned}
+&\text{pick } i_k\in\mathcal{U}\{1,2\}\\
+&x_{k+1}=x_k-\gamma \nabla f_{i_k}(x_k)
+\end{aligned}
+\end{equation*}
+The following lines provide conditions under which the following inequality holds:
+\begin{equation}\label{eq:SGD_conv}
+\mathbb{E}_{i_k}[\|x_{k+1}-x_\star\|^2\,|\, x_k]\leq \tau_R \|x_k-x_\star\|^2+\tau_{\sigma} \sigma^2
+\end{equation}
+for any $d\in\mathbb{N}$, functions $f_i\in\mathcal{F}_{\mu,L}$, any $x_k,x_\star\in\mathbb{R}^d$ such that $\nabla f_1(x_\star)+\nabla f_2(x_\star)=0$ with $\mathbb{E}_i\|\nabla f_i(x_\star)\|^2\leq \sigma^2$.
+
+\paragraph{Linear matrix inequality.} As provided in~\cite{taylor2019stochastic}:
+\begin{equation*}
+\begin{aligned}
+\exists &\lambda_1,\ldots,\lambda_4\geq 0:\\
+&\lambda_1=\lambda_3 \\
+& \lambda_2 =\lambda_4 \\
+&{\scriptsize\begin{pmatrix}
+ L (\lambda_1 \mu +\lambda_2 \mu +\lambda_3 \mu +\lambda_4 \mu +2 \tau_R-2)-2 \mu  (\tau_R-1) & L (\gamma -\lambda_1)-\mu  (\gamma +\lambda_3) & L (\gamma -\lambda_2)-\mu  (\gamma +\lambda_4) & \mu  (\lambda_1-\lambda_2)+L (\lambda_3-\lambda_4) \\
+ L (\gamma -\lambda_1)-\mu  (\gamma +\lambda_3) & \gamma ^2 \mu +\lambda_1+\lambda_3+\gamma ^2 (-L) & 0 & -\lambda_1-\lambda_3 \\
+ L (\gamma -\lambda_2)-\mu  (\gamma +\lambda_4) & 0 & \gamma ^2 \mu +\lambda_2+\lambda_4+\gamma ^2 (-L) & \lambda_2+\lambda_4 \\
+ \mu  (\lambda_1-\lambda_2)+L (\lambda_3-\lambda_4) & -\lambda_1-\lambda_3 & \lambda_2+\lambda_4 & \lambda_1+\lambda_2+\lambda_3+\lambda_4-2 \mu  \tau_\sigma +2 L \tau_\sigma  \\
+\end{pmatrix} }\succeq 0\\
+\end{aligned}
+\end{equation*}
+(parameters: $0<\mu<L$ and $\tau_R,\tau_\sigma,\gamma$; but $L=1$ can be fixed wlog and one can restrict themselves to $\gamma=\tfrac1L$ to start with)
+\subsection{Lyapunov function for gradient descent}
+We let $f\in\mathcal{F}_{0,L}$ ($f$ is an $L$-smooth convex function; with $0< L<\infty$ and $x_\star$ denotes a minimizer of $f$) and a gradient method with step size $1/L$:
+\[x_{k+1}=x_k-\tfrac1L\nabla f(x_k).\]
+The following lines provide conditions for the following inequality (parametrized by $A_{k+1},A_k\geq 0$)
+\begin{equation}
+A_{k+1}(f(x_{k+1})-f(x_\star))+\frac{L}{2}\|x_{k+1}-x_\star\|^2\leq A_k \left(f(x_k)-f(x_\star)\right)+\frac{L}{2}\|x_k-x_\star\|^2
+\end{equation}
+to be valid for any $d\in\mathbb{N}$, function $f\in\mathcal{F}_{0,L}$ and any $x_k,x_\star\in\mathbb{R}^d$ such that $\nabla f(x_\star)=0$.
+\paragraph{Linear matrix inequality.}
+\begin{equation*}
+\begin{aligned}
+\exists& \lambda_1,\ldots,\lambda_6\geq 0\\
+& A_k+\lambda_1+\lambda_2-\lambda_4-\lambda_6=0\\
+&-A_{k+1}-\lambda_2+\lambda_3+\lambda_4-\lambda_5=0\\
+&\begin{pmatrix}
+ 0 & 1-\lambda_1 & -\lambda_3 \\
+ 1-\lambda_1 & \frac{\lambda_1-\lambda_2+\lambda_4+\lambda_6-1}{L} & \frac{\lambda_3-\lambda_2}{L} \\
+ -\lambda_3 & \frac{\lambda_3-\lambda_2}{L} & \frac{\lambda_2+\lambda_3+\lambda_4+\lambda_5}{L} \\
+\end{pmatrix}\succeq 0
+\end{aligned}
+\end{equation*}
 
 \bibliography{refs}{}
 \bibliographystyle{abbrv}
